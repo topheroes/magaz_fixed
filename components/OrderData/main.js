@@ -5,7 +5,7 @@ const OrderData = (props) =>
 {
     return (
         <View>
-            
+            <Text>OrderData</Text>
         </View>
     );
 }

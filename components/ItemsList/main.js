@@ -5,7 +5,7 @@ const ItemsList = (props) =>
 {
     return (
         <View>
-            
+            <Text>ItemsList</Text>
         </View>
     );
 }
