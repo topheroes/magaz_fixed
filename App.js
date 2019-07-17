@@ -1,12 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
+import { createStackNavigator, createAppContainer, createMaterialTopTabNavigator } from 'react-navigation';
 
 //  Это наши компоненты. 
 //  Ваш Кэп.
 import Cart from "./components/Cart/main.js";
-import ItemsList from "./components/ItemsList/main.js";
+import ItemsListNav from "./components/ItemsList/main.js";
 import OrderData from "./components/OrderData/main.js";
 import Orders from "./components/Orders/main.js";
 
@@ -14,8 +13,8 @@ import Orders from "./components/Orders/main.js";
 
 const Main = createStackNavigator(
     {
-        ItemsList: {
-            screen: ItemsList,
+        ItemsListNav: {
+            screen: ItemsListNav,
         },
     },
     {
@@ -45,9 +44,9 @@ const OrdersNav = createStackNavigator(
         headerMode: "none",
     },
 );
-const MainNavigator = createMaterialBottomTabNavigator(
+const MainNavigator = createMaterialTopTabNavigator(
 {
-    ItemsList: {
+    ItemsListNav: {
         screen: Main,
         navigationOptions: {
             title: "Товары",
@@ -67,7 +66,7 @@ const MainNavigator = createMaterialBottomTabNavigator(
     },
 },
 {
-    initialRouteName: 'ItemsList',
+    initialRouteName: 'ItemsListNav',
     activeColor: '#f0edf6',
     inactiveColor: '#3e2465',
     barStyle: { backgroundColor: '#694fad' },
