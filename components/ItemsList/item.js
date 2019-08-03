@@ -59,15 +59,16 @@ const styles = StyleSheet.create({
 
 const Item = (props) =>
 {
+    const product = props.product_data;
     return (
         <Card>
             <View style={styles.container}>
                 <View style={styles.card}>
                     <View style={styles.left}>
-                        <Text style={styles.leftHeader}>{props.name}</Text>
+                        <Text style={styles.leftHeader}>{product.name}</Text>
                         <Image
                             style={{width: 66, height: 58}}
-                            source={{uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg=='}}
+                            source={{uri: product_data.images[0].src}}
                         />
                     </View>
                     <View style={styles.right}>
@@ -78,28 +79,13 @@ const Item = (props) =>
                                 { value: "3" },
                             ]
                         }/>
-                        <Dropdown label="Цвет" value="Церулеум" data={
-                            [
-                                { value: "Церулеум" },
-                                { value: "Розовый" },
-                                { value: "Альбинос" },
-                            ]
-                        }/>
-                        <Dropdown label="Размер" value="S" data={
-                            [
-                                { value: "S" },
-                                { value: "M" },
-                                { value: "L" },
-                                { value: "XL" },
-                            ]
-                        }/>
                     </View>
                 </View>
                 
                 <View style={styles.bottom}>
                     <Text style={styles.desc}>{props.desc}</Text>
                     <View style={styles.buy}>
-                        <Text style={{marginRight:8}}>{`Цена: ${props.price} Септимов`}</Text>
+                        <Text style={{marginRight:8}}>{`Цена: ${product.price}$`}</Text>
                         <Button primary raised text="Купит!"/>
                     </View>
                 </View>
