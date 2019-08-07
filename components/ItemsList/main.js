@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, ScrollView, Button } from 'react-native';
 
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { createStackNavigator, createSwitchNavigator , createAppContainer } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 
 import Item from "./item.js";
@@ -22,18 +22,18 @@ const ItemsList = (props) =>
 
     useEffect( async () =>
     {
-        await fetch(`http://localhost/wp-json/custom-routes/view_products_by_cat/${props.id}`).then( (resp) =>
-        {
-            setData(resp.json());
-        })
+        console.log(`http://192.168.1.215/wp-json/custom-routes/view_products_by_cat/${props.id}`)
+        let resp = await fetch(`http://192.168.1.215/wp-json/custom-routes/view_products_by_cat/${props.id}`);
+        console.log("Точна?")
+        setData(resp.json());
     });
-
+    console.log('ss')
     return (
         <ScrollView alwaysBounceVertical>
-            {data.map((v, i) =>
+            {data ? data.map((v, i) =>
             {
                 return <Item key={i} productData={v}/>;
-            })}
+            }) : <Text>Загрузка...</Text>}
         </ScrollView>
     );
 }
@@ -56,9 +56,7 @@ const MainNavigator = (props) =>
 
     useEffect( async () =>
     {
-        console.log("Dai fetch");
-        let resp = await fetch("http://localhost/wp-json/custom-routes/products_categories");
-        console.log("Ne dam");
+        let resp = await fetch("http://192.168.1.215/wp-json/custom-routes/products_categories");
         let cats = await resp.json();
 
         if ( cats["code"] )
@@ -73,6 +71,7 @@ const MainNavigator = (props) =>
             for ( cat of cats )
             {
                 let tab = await navigatorHandler(cat, {headerMode: "none"});
+
                 categoriesNav[cat["id"]] = {
                     screen: tab,
                     navigationOptions: {
@@ -80,8 +79,9 @@ const MainNavigator = (props) =>
                         id: cat["id"],
                     }
                 };
+
                 if ( isFirst )
-                    await setFirstTab(cat["name"]); isFirst = false;
+                    await setFirstTab(cat["id"]); isFirst = false;
                 
             }
             setCategories(categoriesNav);
@@ -95,7 +95,9 @@ const MainNavigator = (props) =>
             activeColor: '#f0edf6',
             inactiveColor: '#3e2465',
             barStyle: { backgroundColor: '#694fad' },
-        }) : <Text>Loading...</Text>;
+        })
+        : error ? <Text>Произошла ошибка при получении списка товаров</Text>
+        : <Text>Загрузка...</Text>;
 }
 
 const ItemsListNav = createAppContainer(MainNavigator);
